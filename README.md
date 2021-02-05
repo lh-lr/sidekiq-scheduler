@@ -1,5 +1,7 @@
 # sidekiq-scheduler
 
+Updated for Ruby 3 as per PR https://github.com/moove-it/sidekiq-scheduler/pull/316 Thanks to @coderberry !
+
 <p align="center">
   <a href="http://moove-it.github.io/sidekiq-scheduler/">
     <img src="https://moove-it.github.io/sidekiq-scheduler/images/small-logo.svg" width="468px" height="200px" alt="Sidekiq Scheduler" />
