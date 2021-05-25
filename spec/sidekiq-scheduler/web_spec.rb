@@ -4,6 +4,8 @@ require 'rack/test'
 describe Sidekiq::Web do
   include Rack::Test::Methods
 
+  Sidekiq::Web.use Rack::Session::Cookie, secret: File.read("spec/support/.session.key"), same_site: true, max_age: 86400
+
   let(:app) { Sidekiq::Web }
 
   let(:enabled_job_name) { 'Foo Job' }
@@ -91,7 +93,7 @@ describe Sidekiq::Web do
   end
 
   describe '/recurring-jobs/:name/toggle' do
-    subject { get "/recurring-jobs/#{URI.encode_www_form_component(enabled_job_name)}/toggle" }
+    subject { get "/recurring-jobs/#{ERB::Util.url_encode(enabled_job_name)}/toggle" }
 
     it 'toggles job enabled flag' do
       expect { subject }
@@ -106,7 +108,7 @@ describe Sidekiq::Web do
   end
 
   describe 'GET /recurring-jobs/:name/enqueue' do
-    subject { get "/recurring-jobs/#{URI.encode_www_form_component(job_name)}/enqueue" }
+    subject { get "/recurring-jobs/#{ERB::Util.url_encode(job_name)}/enqueue" }
 
     let(:job_name) { enabled_job_name }
     let(:job) { jobs[job_name] }
